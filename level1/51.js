@@ -13,3 +13,18 @@ const solution = n => {
     }
     return maxNum/6;
 }
+
+// const solution = (n) => {
+//     let piece = 6
+
+//     while(true) {
+//         if (piece % n === 0) {
+//             break
+//         }
+//         piece += 6
+//     }
+
+//     return piece / 6
+// }
+
+// 피자 조각을 6부터 시작해서 6씩 더해서 n을 나눴을때 나누어 떨어질때 Break
