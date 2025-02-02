@@ -4,11 +4,7 @@ function solution(s) {
     var answer = ""
     let average = Math.ceil(s.length/2) 
     
-    if (s.length % 2 === 0)  {
-        answer = s[average-1] + s[average]
-    }
-    else answer = s[average-1]
-    
-    return answer
+    if (s.length % 2 !== 0) return s.substring(average-1,average)
+    else return s.substring(average-1, average+1)
     
 }
