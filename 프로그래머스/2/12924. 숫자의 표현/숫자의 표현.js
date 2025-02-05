@@ -1,11 +1,12 @@
 function solution(n) {
     let count = 0;
-
-    for (let m = 1; m * (m - 1) / 2 < n; m++) {
-        if ((n - (m * (m - 1) / 2)) % m === 0) {
-            count++;
-        }
+    let i = 0;
+    
+    while (n > 0) {
+        i++;
+        if (n % i === 0) count++;
+        n -= i
     }
-
-    return count;
+    
+    return count
 }
