@@ -1,12 +1,12 @@
 function solution(s){
-    let leftCount = 0;
-    let rigthCount = 0;
+    if (s[0] === ")" || s[s.length-1] === "(") return false
+    const result = []
     
     for (let i = 0; i < s.length; i++) {
-        if (leftCount < rigthCount) return false
-        if (s[i] === "(") leftCount ++
-        if (s[i] === ")") rigthCount ++
+        if (s[i] === "(") result.push(s[i])
+        else result.pop()
     }
-    if (leftCount === rigthCount) return true
+    
+    if (result.length === 0) return true
     else return false
 }
