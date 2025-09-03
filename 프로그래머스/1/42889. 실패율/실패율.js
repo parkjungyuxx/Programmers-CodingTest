@@ -1,20 +1,26 @@
 function solution(N, stages) {
-    const failureRates = [];
+    // 실패율 = 스테이지에 도달 했으나 아직 클리어하지 못한 플레이어의 수 / 스테이지에 도달한 플레이어의 수
+    // 1. 도전자 수
+    // 2. 실패율
     
-    for (let stage = 1; stage <= N; stage++) {
-        const playerReached = stages.filter((playerStage) => playerStage >= stage).length;
-        const playerFailed = stages.filter((playerStage) => playerStage === stage).length
-        
-        const failureRate = playerReached > 0 ? playerFailed/playerReached : 0
-        failureRates.push({stage, failureRate})
-        
+    const challengers = new Array(N+2).fill(0)
+    
+    for (const stage of stages) {
+        challengers[stage] += 1
     }
     
-    const sortedFailureRates = failureRates.sort((a,b) => {
-        if (a.failureRate !== b.failureRate) {
-            return b.failureRate - a.failureRate
+    const fails = {}
+    let sLength = stages.length
+    
+    for (let i = 1; i <= N; i++) {
+        if (challengers[i] === 0) {
+            fails[i] = 0;
+            continue;
         }
-        return a.stage - b.stage;
-    })
-return sortedFailureRates.map(({stage})=> stage)
+        
+        fails[i] = challengers[i] / sLength
+        sLength -= challengers[i]
+    }
+    const result = Object.entries(fails)
+    return result.sort((a,b) => b[1] - a[1]).map((v) => Number(v[0]))
 }
