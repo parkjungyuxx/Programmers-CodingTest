@@ -1,24 +1,30 @@
 function solution(want, number, discount) {
-    let answer = 0;
+  let answer = 0;
 
-    for (let i = 0; i <= discount.length - 10; i++) {
-        const window = discount.slice(i, i + 10);
-        const map = new Map();
+  // 필요 개수 맵
+  const need = {};
+  for (let i = 0; i < want.length; i++) {
+    need[want[i]] = number[i];
+  }
 
-        for (let item of window) {
-            map.set(item, (map.get(item) || 0) + 1);
-        }
+  // 시작 인덱스는 0 ~ (len - 10)
+  for (let i = 0; i <= discount.length - 10; i++) {
+    // 윈도우마다 새 카운터 복제
+    const cnt = { ...need };
 
-        let isMatch = true;
-        for (let j = 0; j < want.length; j++) {
-            if (map.get(want[j]) !== number[j]) {
-                isMatch = false;
-                break;
-            }
-        }
-
-        if (isMatch) answer++;
+    // 10일치 깎기
+    for (let j = i; j < i + 10; j++) {
+      const item = discount[j];
+      if (cnt[item] !== undefined) cnt[item]--;
     }
 
-    return answer;
+    // 모두 0 이하인지 확인
+    let ok = true;
+    for (const k in cnt) {
+      if (cnt[k] > 0) { ok = false; break; }
+    }
+    if (ok) answer++;
+  }
+
+  return answer;
 }
